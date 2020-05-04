@@ -11,12 +11,13 @@ import (
 type ShellConf struct {
 	Ps1          string
 	ExecutionDir string
+	CaptureMeta  bool
 }
 
 // GetDefaultConf returns a default shell
 // configuration
 func GetDefaultConf() ShellConf {
-	return ShellConf{"$ > ", getCurrentDir()}
+	return ShellConf{"$ > ", getCurrentDir(), true}
 }
 
 func getCurrentDir() string {

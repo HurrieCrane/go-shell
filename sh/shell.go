@@ -15,16 +15,19 @@ type Shell struct {
 	version string
 }
 
+// Config is a global configuration
+// object
+var Config *conf.ShellConf
+
 var p parser.Parser
 var bufReader *bufio.Reader
-var config *conf.ShellConf
 
 // InitiliseShell will initilise and configure everything
 // required to run the shell
 //
 func (s Shell) InitiliseShell(conf *conf.ShellConf) {
 	// create reference to config
-	config = conf
+	Config = conf
 	// create reader
 	bufReader = bufio.NewReader(os.Stdin)
 }
@@ -34,7 +37,7 @@ func (s Shell) StartShell() (int, error) {
 	var status int64 = -1
 	for status < 0 {
 		// print ps1
-		fmt.Print(config.Ps1)
+		fmt.Print(Config.Ps1)
 
 		// read in line
 		line, err := bufReader.ReadString('\n')
@@ -51,7 +54,10 @@ func (s Shell) StartShell() (int, error) {
 			break
 		}
 
-		fmt.Println(strings.Trim(line, "\n\r"))
+		// actually process the input
+		pline := strings.Trim(line, "\n\r")
+		parserOutput, err := p.Parse(Config, &pline)
+		fmt.Println(parserOutput)
 	}
 
 	return 0, nil

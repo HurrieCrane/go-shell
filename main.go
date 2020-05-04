@@ -22,10 +22,10 @@ func main() {
 
 	switch status {
 	case 0:
-		fmt.Println("Status code 0")
+		fmt.Println("\nStatus code 0")
 	case 1:
-		fmt.Println("Status code 1")
+		fmt.Println("\nStatus code 1")
 	default:
-		fmt.Printf("Unknown statuscode code: %v", status)
+		fmt.Printf("\nUnknown statuscode code: %v", status)
 	}
 }
